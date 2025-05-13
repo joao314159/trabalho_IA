@@ -92,10 +92,16 @@ pegue(X):-
 pegue(_).
 
 pode_pegar(Coisa):-
+    (Coisa == naninha ->  
+    ( naninha_demoniaca(nao)->  
+    (   aqui(Lugar),
+    localizacao(Coisa,Lugar)) ;
+    write('a naninha está assustadora.'),nl ,fail);
     aqui(Lugar),
-    localizacao(Coisa,Lugar).
+    localizacao(Coisa,Lugar)
+    ).
 
-pode_pegar(Coisa):-
+pode_pegar(Coisa):-    
     write('Nao existe nenhuma (a) '), write(Coisa),
           write(' aqui.'), nl, fail.
 
@@ -109,27 +115,30 @@ goto(Lugar):-
     
     
     
+    (
+    naninha_esta_em_lugar(Lugar),    
+    escondido(nao),
+    naninha_demoniaca(sim)->          
+    write('A naninha te achou. '),    
+    do(fim),
+    fim_condicao(fim);    
     desafio(goto(Lugar)),
     pode_ir(Lugar),
-    mova(Lugar), veja,
+    mova(Lugar), veja
+           
     
-    %modificações
-    naninha_esta_em_lugar(Lugar),
-    pode_pegar(naninha),
-    escondido(nao),
-    naninha_demoniaca(sim),
-    write(''),
-    write(''),
-    write('MORREU'),
-    write(''),
-    write(''),
-    do(fim),
-    fim_condicao(fim).
-    
-    
-   
+    ).
+       
 
 goto(_).
+
+jogar_agua_benta_na_naninha :-
+    tem(agua-benta),
+    aqui(Lugar),
+    localizacao(naninha,Lugar),
+    write('você purificou a naninha. Agora ela não é mais assustadora.'),
+    retract(naninha_demoniaca(sim)),
+    asserta(naninha_demoniaca(nao)).   
 
 desafio(goto(lavanderia)):-
         tem(lanterna),!.
@@ -156,6 +165,7 @@ loop:-
 do(goto(X)):-goto(X),!.
 do(tem(X)):-tem(X),!.
 do(veja):-veja,!.
+do(exorcizar):- jogar_agua_benta_na_naninha, !.
 do(pegue(X)):-pegue(X), !.
 do(fim).
 do(esconda) :- esconda,!. %modificação
