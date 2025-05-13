@@ -16,7 +16,7 @@ localizacao(naninha, lavanderia).
 localizacao(computador, escritorio).
 
 localizacao(caixa, escritorio). %modificação
-localizacao(agua-benta,lavanderia).  %modificação
+localizacao(agua-benta,cozinha).  %modificação
 
 
 porta(escritorio, entrada).
